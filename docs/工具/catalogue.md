@@ -1,0 +1,53 @@
+# 软件目录
+
+- 编程软件
+  - VSCode
+    - foam
+      - 作用：查看笔记间关系
+      - 命令： Ctrl + Shift + P => **Foam: Show Graph**
+  - jetbrains全家桶
+    - webstorm
+    - pycharm
+    - intellij idea
+  - visual studio
+- 工具软件
+  - CesiumLab2.3.4
+  - LSV
+  - postman
+  - todesk/向日葵/zoom
+  - git
+  - notepad++
+  - typora
+  - 飞火壁纸（手机/电脑）
+  - 雷电模拟器
+- 浏览器
+  - chrome
+  - edge
+- 专业软件
+  - arcgis系列
+  - supermap系列
+  - qgis
+  - adobe illustrator CS6
+- 建模
+  - pix4D
+  - revit
+- 数据库
+  - postgre
+  - mysql
+  - navicat
+- 写作
+  - office2016
+  - adobe Acrobat DC
+  - CAJviewer
+- 生活日常
+  - 百度网盘
+  - 腾讯会议
+  - 酷狗
+  - potplayer
+  - 微信
+  - mindmaster
+  - FSCapture
+  - 问道O(∩_∩)O哈哈~
+- 剪辑
+  - photoshop
+  - premiere2019
