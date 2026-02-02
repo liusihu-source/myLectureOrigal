@@ -12,7 +12,7 @@
 
 ### 1.2 构造函数
 
-- constructor 可选, 默认为一个空函数;
+- constructor 可选, 默认空函数;
 - 定义实例属性和实例方法;
 
 ```javascript
