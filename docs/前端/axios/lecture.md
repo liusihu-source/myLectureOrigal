@@ -199,3 +199,40 @@ axios.defaults.baseURL = '....'
 //可创建不同的axios对象实例
 ```
 
+
+
+## 其他常用配置
+
+| 名称            | 类型    | 默认值                               | 作用                                                         |
+| --------------- | ------- | ------------------------------------ | ------------------------------------------------------------ |
+| baseURL         | baseURL |                                      | 基础URL，所有请求都会自动拼接此URL                           |
+| timeout         | number  | 10000                                | 请求超时时间（毫秒），超时自动取消                           |
+| method          | string  | 'GET'                                | HTTP请求方法：`GET`、`POST`、`PUT`、`DELETE`、`PATCH`、`HEAD`、`OPTIONS` |
+| headers         | object  | {'Content-Type': 'application/json'} | 请求头配置，支持自定义请求头                                 |
+| data            | any     | null                                 | 请求体数据，POST/PUT/PATCH请求时使用                         |
+| responseType    | string  | 'json'                               | 响应数据类型，可选：`json`、`text`、`blob`、`arraybuffer`、`document` |
+| retry           | number  | 0                                    | 失败重试次数，0表示不重试                                    |
+| retryDelay      | number  | 1000                                 | 重试延迟时间（毫秒）                                         |
+| withCredentials | boolean | false                                | 是否携带跨域凭证（cookies、认证头等）                        |
+| cache           | boolean | false                                | 是否启用请求缓存                                             |
+
+:bulb: withCredentials 为 true场景
+
+- 跨域认证（前端应用（a.com）访问后端API（api.b.com），需要传递认证token）
+- 多个子域共享登录状态
+
+```
+// 假设前端网站是 https://app.example.com
+// 后端API是 https://api.example.com
+
+// 1. 同源请求（Same Origin）✅
+// 前端：https://app.example.com
+// 后端：https://app.example.com/api/data
+// 会发送：所有 app.example.com 的cookies
+
+// 2. 跨域请求（Cross-Origin）✅
+// 前端：https://app.example.com
+// 后端：https://api.example.com
+// 会发送：api.example.com 的cookies，但不会发送 app.example.com 的cookies！
+```
+

@@ -1,334 +1,253 @@
-# Class类 
+# Class类
 
-> 类是用于创建对象的模板。
+## 一、基础
 
-## 一、定义类
+### 1.1 创建 Class
 
-两部分：类表达式 和 类声明。
-
-### 1.1 类声明
-
-使用`class`关键字的类名
-
-```typescript
-class Rectangle {
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
-  }
-}
-
-```
-
-:warning: 函数声明 和 类声明有个重要区别。`函数声明会提升，类不存在声明提升`
-
-```typescript
-let p = new Rectangle(); // ReferenceError
-
-class Rectangle {}
-```
+- 大驼峰;
+- class 声明不会发生变量提升;
+- 块作用域;
 
 
 
-### 1.2 类表达式
+### 1.2 构造函数
 
-```typescript
-// 未命名/匿名类
-let Rectangle = class {
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
+- constructor 可选, 默认为一个空函数;
+- 定义实例属性和实例方法;
+
+```javascript
+const Person = class {
+  constructor() {
+    console.log("person ctor");
   }
 };
-console.log(Rectangle.name);
-// output: "Rectangle"
-
 ```
 
 
 
-## 二、类体和方法定义
-
-一对花括号 `{}` 中部分，定义方法和属性
-
-### 2.1 严格模式
-
-检验严格模式两种方法：在Js脚本中最顶行输入`"use strict"`; 通过window 或者 global的strict mode判断
-
-
-
-### 2.2 构造函数
-
-- 一个类只能拥有一个名为[constructor](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/constructor)的特殊方法
-
-- constructor内可用 `super` 关键字调用父类的构造函数。
-
-
-
-### 2.3 静态方法
-
-[`static`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/static) 定义静态方法。
-
-:bulb: 通常用于创建工具函数，如Math.max()
-
-```typescript
-class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  static displayName = "Point";
-
-  static distance(a, b) {
-    const dx = a.x - b.x;
-    const dy = a.y - b.y;
-    return Math.hypot(dx, dy);
-  }
-}
-
-const p1 = new Point(5, 5);
-const p2 = new Point(10, 10);
-p1.displayName;
-// undefined
-p1.distance;
-// undefined
-
-console.log(Point.displayName);
-// "Point"
-console.log(Point.distance(p1, p2));
-// 7.0710678118654755
-
-```
-
-
-
-### 2.4 用原型和静态方法绑定this
-
-当调用静态或原型方法时没有指定 *this* 的值，那么方法内的 *this* 值将被置为 **`undefined`**。
-
-```typescript
-class Animal {
-  speak() {
-    return this;
-  }
-  static eat() {
-    return this;
-  }
-}
-
-let obj = new Animal();
-obj.speak(); // Animal {}
-let speak = obj.speak;
-speak(); // undefined
-
-Animal.eat(); // class Animal
-let eat = Animal.eat;
-eat(); // undefined
-
-```
-
-
-
-### 2.5 实例属性
-
-实例的属性必须定义在类的方法里：
-
-```typescript
-class Rectangle {
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
-  }
-}
-```
-
-静态的或原型的数据属性必须定义在类定义的外面。
-
-```typescript
-Rectangle.staticWidth = 20;
-Rectangle.prototype.prototypeWidth = 25;
-```
-
-
-
-### 2.7 字段声明
-
-公有字段声明（`类似java 中的public，只是public 默认不写`）
-
-使用 JavaScript 字段声明语法，上面的示例可以写成
-
-```typescript
-class Rectangle {
-  height = 0;
-  width;
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
-  }
-}
-```
-
-
-
-私有字段声明
-
-从类外部引用私有字段是错误的。它们只能在类里面中读取或写入。
-
-
-
-## 三、使用extends扩展子类
-
-[`extends`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/extends) 关键字在 *类声明* 或 *类表达式* 中用于创建一个类作为另一个类的一个子类。
-
-```typescript
-class Animal {
-  constructor(name) {
-    this.name = name;
-  }
-
-  speak() {
-    console.log(`${this.name} makes a noise.`);
-  }
-}
-
-class Dog extends Animal {
-  constructor(name) {
-    super(name); // 调用超类构造函数并传入 name 参数
-  }
-
-  speak() {
-    console.log(`${this.name} barks.`);
-  }
-}
-
-var d = new Dog("Mitzie");
-d.speak(); // 'Mitzie barks.'
-
-```
-
-如果子类中定义了构造函数，那么它必须先调用 `super()` 才能使用 `this` 。
-
-也可以继承传统的基于函数的“类”：
-
-```typescript
-function Animal(name) {
-  this.name = name;
-}
-Animal.prototype.speak = function () {
-  console.log(this.name + " makes a noise.");
-};
-
-class Dog extends Animal {
-  speak() {
-    super.speak();
-    console.log(this.name + " barks.");
-  }
-}
-
-var d = new Dog("Mitzie");
-d.speak(); //Mitzie makes a noise.  Mitzie barks.
-
-```
-
-:warning: 类不能继承常规对象（不可构造的），如果要继承常规对象，可使用Object.setPrototypeOf()
-
-```typescript
-var Animal = {
-  speak() {
-    console.log(this.name + " makes a noise.");
-  },
-};
-
-class Dog {
-  constructor(name) {
-    this.name = name;
-  }
-}
-
-Object.setPrototypeOf(Dog.prototype, Animal); // 如果不这样做，在调用 speak 时会返回 TypeError
-
-var d = new Dog("Mitzie");
-d.speak(); // Mitzie makes a noise.
-
-```
-
-## 四、Species
-
-尝试在派生数组类或其他子类中返回Array类或其他父类，可通过species方式覆盖默认的构造函数。如下：
-
-```typescript
-class MyArray extends Array {
-  // Overwrite species to the parent Array constructor
-  static get [Symbol.species]() {
-    return Array;
-  }
-}
-var a = new MyArray(1, 2, 3);
-var mapped = a.map((x) => x * x);
-
-console.log(mapped instanceof MyArray);
-// false
-console.log(mapped instanceof Array);
-// true
-
-```
-
-
-
-## 五、使用super调用超类
-
-[`super`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/super) 关键字用于调用对象的父对象上的函数。
-
-```typescript
-class Cat {
-  constructor(name) {
-    this.name = name;
-  }
-
-  speak() {
-    console.log(this.name + " makes a noise.");
-  }
-}
-
-class Lion extends Cat {
-  speak() {
-    super.speak();
-    console.log(this.name + " roars.");
-  }
-}
-
-```
-
-
-
-## 六、Mix-ins / 混入
-
-> 在JavaScript中，一个ES类只能有一个单超类，所以想要从工具类实现多重继承是不可的。
->
-> `Mix-ins(mixture-inheritance) / 混入`的概念：一种面向对象编程中将特定功能混合到类中的方式。从而使类具有这些功能的能力。
-
-```typescript
-const CanEat = {
-  eat() {
-    console.log('Eating...');
+### 1.3 实例化
+
+- 创建一个 object;
+- object 的 `__proto__` 指向 constructor 的 prototype;
+- constructor 的 this 指向 object;
+- 执行 constructor 内语句;
+- 若 constructor 返回一个 object, 则返回该 object, 否则返回新创建的对象;
+
+```javascript
+const Person = class {
+  constructor() {
+    console.log("0");
   }
 };
+let p1 = new Person(); // 0
+```
 
-const CanSleep = {
-  sleep() {
-    console.log('Sleeping...');
+
+
+## 二、类方法
+
+### 2.1 分类
+
+#### 2.1.1 实例方法
+
+在constructure中定义 实例方法、实例属性，不同实例间隔离
+
+```javascript
+class Person {
+  constructor() {
+    this.name = new String("Jack");
+    this.sayName = () => console.log(this.name);
+    this.nicknames = ["Jake", "J-Dog"];
   }
-};
+}
 
+let p1 = new Person(),
+p1.sayName(); // Jack
+p1.name = p1.nicknames[0];
+p1.sayName(); // Jake
+```
+
+
+
+#### 2.1.2 原型方法
+
+定义在class内部，不同实例间共享
+
+```javascript
+class Person {
+  constructor() {
+    this.locate = () => console.log("instance");
+  }
+  locate() {
+    console.log("prototype");
+  }
+}
+let p = new Person();
+p.locate(); // instance
+Person.prototype.locate(); // prototype
+```
+
+:bulb: 如果全局确定只有一个实例，可以写在原型中。实例一个对象放在pinia中，全局各处使用
+
+
+
+#### 2.1.3 访问器方法
+
+- 只定义 get, 表明只读;
+- 只定义 set, 表示只写;
+
+```javascript
+// 写 name 属性时触发 set
+// 读 name 属性时触发 get
+class Person {
+  set name(newName) {
+    this.name_ = newName;
+  }
+  get name() {
+    return this.name_;
+  }
+}
+let p = new Person();
+p.name = "Jake";
+console.log(p.name); // Jake
+```
+
+
+
+#### 2.1.4 静态方法
+
+- 定义在 class 对应的 object 上, 不需要实例化即可访问;
+
+```javascript
+class Person {
+  constructor() {
+    // 实例方法
+    this.locate = () => console.log("instance", this);
+  }
+  // 原型方法
+  locate() {
+    console.log("prototype", this);
+  }
+  // 静态方法
+  static locate() {
+    console.log("class", this);
+  }
+}
+let p = new Person();
+p.locate(); // instance, Person {}
+Person.prototype.locate(); // prototype, {constructor: ... }
+Person.locate(); // class, class Person {}
+```
+
+
+
+### 2.2 两种函数形式
+
+```javascript
+class Test {
+  // 普通函数
+  fun() {
+    console.log(this.color);
+  }
+
+  // 箭头函数
+  arrow = () => {
+    console.log(this.color);
+  };
+}
+```
+
+:bulb: this指向问题： 前端-JS-进阶-函数
+
+
+
+## 三、类继承
+
+### 3.1 继承基础
+
+- 使用 extends 关键字;
+- 子类继承父类所有的属性和方法;
+
+```typescript
+class Vehicle {
+  identifyPrototype(id) {
+    console.log(id, this);
+  }
+}
+```
+
+
+
+### 3.2 super
+
+- 子类自定义 constructor 必须使用 super;
+  - 只能用于子类 constructor 和 static method 中;
+  - 用于调用父类的 constructor 并赋值给子类的 this;
+- 当不自定义 constructor 时, 自动调用 super;
+
+```typescript
+class Vehicle {
+  constructor() {
+    this.hasEngine = true;
+  }
+}
+class Bus extends Vehicle {
+  constructor() {
+    // 调用 super() 之前, 子类无法使用 this
+    // 自定义 constructor 必须使用 super(), 或返回一个自定义 object
+    super();
+    console.log(this instanceof Vehicle); // true
+    console.log(this); // Bus { hasEngine: true }
+  }
+}
+```
+
+
+
+### 3.3 抽象基类
+
+- 不会被实例化的类;
+- 使用 new.target 属性, 禁止实例化;
+
+```typescript
+class Vehicle {
+  constructor() {
+    console.log(new.target);
+    if (new.target === Vehicle) {
+      throw new Error("Vehicle cannot be directly instantiated");
+    }
+  }
+}
+// Derived class
+class Bus extends Vehicle {}
+new Bus(); // class Bus {}
+new Vehicle(); // class Vehicle {}
+// Error: Vehicle cannot be directly instantiated
+```
+
+
+
+### 3.4 类进阶
+
+#### class本质
+
+```javascript
+const Person = class {};
+console.log(Person); // class Person {}
+console.log(typeof Person); // function
+```
+
+#### instanceof 操作符
+
+- 检查实例所属类;
+
+```typescript
 class Person {}
-
-// 使用 Object.assign() 将多个 Mix-ins 混入到 Person 类中
-Object.assign(Person.prototype, CanEat, CanSleep);
-
-const person = new Person();
-person.eat(); // 输出: Eating...
-person.sleep(); // 输出: Sleeping...
-
+let p = new Person();
+console.log(p instanceof Person); // true
 ```
+
+#### 实现方式
+
+- 寄生组合式继承
 

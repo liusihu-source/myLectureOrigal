@@ -2,7 +2,7 @@
 
 > 语法来源 Java 和 C，这两种语言的语法特性同样适用 JavaScript
 
-## 一、基本数据类型
+## 一、数据类型
 
 - [`Number`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number)（数字）
 - [`String`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String)（字符串）
@@ -22,98 +22,208 @@
 
 
 
-## 二、数字类型
+### 1.1 undefined（原子）
 
-### 2.1 概述
+- 表示变量声明, 但未初始化的状态;
 
-- “遵循 IEEE 754 标准的双精度 64 位格式”表示数字。
-
-- 除了[`BigInt`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/BigInt)，**并不存在整数/整型 (Integer)。**
-
-```typescript
-console.log(3 / 2);             // 1.5,not 1
-console.log(Math.floor(3 / 2)); // 1
-console.log(0.1 + 0.2)  //0.30000000000000004
+```
+// typeof 对无声明和未初始化的变量 返回 undefined
+let message;
+console.log(typeof message); // "undefined"
+console.log(typeof age); // "undefined"
 ```
 
-:warning: 一个看上去是整数的东西，其实都是浮点数。
+### 1.2  Null（原子）
 
+- 表示没有值;
+- 通常用于初始化对象, 表示一个空的对象;
 
+:bulb: typeof null返回 "object"是历史遗留 bug
 
-### 2.2 使用
+### 1.3 Boolean（原子）
 
-- 支持标准的[算术运算符 (en-US)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators)，如加法、减法、取模（或取余）等等
-- 提供内置对象 [`Math`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math)（数学对象），以处理更多的高级数学函数和常数
+- true + false;
 
-```typescript
-Math.sin(3.5);
-var circumference = 2 * Math.PI * r;
-```
+#### 布尔类型与数字的关系
 
-- 可使用内置函数 [`parseInt()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseInt) 将字符串转换为整型。该函数的第二个可选参数表示字符串表示（进制）：
+- true 不等于 1;
+- false 不等于 0;
+- 两者通过 Number() 可转换为 1 和 0;
 
-```typescript
-parseInt("123", 10); // 123
-parseInt("010", 10); // 10
-parseInt("11", 2); // 3
-```
+#### 任意类型的布尔值
 
-- 内置函数 [`parseFloat()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/parseFloat)，解析浮点数字符串，`parseFloat()` 只应用于解析十进制数字。
+- 任意类型都具有布尔值;
+- 可通过 Boolean() 函数转换;
 
-- 如果给定的字符串不存在数值形式，函数会返回一个特殊的值 [`NaN`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NaN)（Not a Number 的缩写）
-  - 此外NaN` 作为参数进行任何数学运算，结果也会是 `NaN
-  - 可使用内置函数 [`isNaN()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/isNaN) 来判断一个变量是否为 `NaN`：
+| 数据类型  | 真值           | 假值      |
+| --------- | -------------- | --------- |
+| Boolean   | true           | false     |
+| String    | 任何非空字符串 | 空字符串  |
+| Number    | 任何非 0 数字  | 0, NaN    |
+| Object    | 任意对象       | null      |
+| Undefined | n/a            | undefined |
 
-```typescript
-parseInt("hello", 10); // NaN
-NaN + 5; //NaN
-isNaN(NaN); // true
-```
+### 1.4 Number（原子）
 
+#### 格式
 
+- 使用 IEEE–754 表示整数和浮点数;
+- 64 位双浮点数精度;
 
-## 三、字符串类型
-
-- 一串[Unicode 字符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_types#unicode.e7.bc.96.e7.a0.81)序列
-- 每一个 Unicode 字符由一个或两个编码单元来表示
-- 每一个编码单元由一个 16 位二进制数表示
-
-
-
-### 3.1 字符串的属性
-
- [`length`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/length)（编码单元的个数）属性，可以得到它的长度。
+#### 进制
 
 ```typescript
-"hello".length; // 5
+// 十进制
+let intNum = 55; // integer
+// 二进制
+let bNum = 0b10;
+// 八进制
+let octalNum = 070; // octal for 56
+// 十六进制
+let hexNum = 0xa;
 ```
 
+#### 浮点数
 
-
-### 3.2 字符串的常用方法
+##### 语法格式
 
 ```typescript
-"hello".charAt(0); // "h"
-"hello, world".replace("world", "mars"); // "hello, mars"
-"hello".toUpperCase(); // "HELLO"
+let floatNum1 = 1.1;
+```
+
+###### float 到 int 的隐式转换
+
+```typescript
+// 若小数点后无数字或为 0, 将其转换为 int
+let floatNum1 = 1; // 等效于 int 1
+let floatNum2 = 10.0; // 等效于 int 10
 ```
 
 
 
-## 四、其他类型
+##### 科学计数法
 
-- 布尔类型，分别是 `true` 和 `false`（两者都是关键字）。
+```typescript
+let floatNum = 3.125e7; // equal to 31250000
+let floatNum = 3e-7; // equal to 0.0000003
+```
 
-- 支持变量转换成布尔类型：
+:bulb:浮点数有精度损失
 
-1. `false`、`0`、空字符串（`""`）、`NaN`、`null` 和 `undefined` 被转换为 `false`
-2. 所有其他值被转换为 `true`
+```typescript
+// 不要用于 if 语句中测试具体值
+let a = 0.1 + 0.2; // equal to   0.30000000000000004
+```
 
 
 
-## 五、运算符及表达式
+#### 数字的范围
 
-### 5.1 运算符
+- Number.MIN_VALUE: 5e–324;
+- Number.MAX_VALUE: 1.7976931348623157e+308;
+- 若计算范围超过 JavaScript 范围, 结果为 Infinity/-Infinity;
+
+
+
+#### 整数和浮点数的内存耗费
+
+- 存储在栈上, 耗费 8 字节
+
+#### NaN
+
+- 表明无效值;
+- NaN 与任何值计算结果皆为 NaN;
+- NaN 不等于任何值, 包括 NaN;
+- 只能通过 isNaN() 方法判断是否为 NaN, 其余方法一直为 false;
+
+```typescript
+console.log(typeof NaN); // 输出 "number"
+let x = NaN;
+console.log(x == NaN); // 输出 "false"
+console.log(x === NaN); // 输出 "false"
+console.log(isNaN(x)); // 输出 "true"
+```
+
+### 1.5 BigInt （原子）
+
+任意精度格式的整数（特殊场景：加密算法、数字签名、游戏经济系统、随机ID）
+
+### 1.6 String（原子）
+
+- immutable 不可变
+- length
+
+#### 字面量
+
+```javascript
+let name = "lsh";
+console.log(`My name is ${name}.`); // My name is lsh;
+```
+
+#### 原始字符串
+
+```javascript
+console.log(`first line\nsecond line`);
+// first line
+// second line
+console.log(String.raw`first line\nsecond line`); // "first line\nsecond line"
+```
+
+### 1.7 Symbol（原子）
+
+- 作为对象属性的标识符
+
+```javascript
+let s1 = Symbol("foo");
+let s2 = Symbol("bar");
+let s3 = Symbol("baz");
+let s4 = Symbol("qux");
+
+let o = {};
+
+// 方法1：计算属性语法
+o[s1] = "foo val";
+
+// 方法2：点语法（错误，不适用于Symbol）
+// o.s2 = "bar val";  // 错误！创建的是字符串属性"s2"
+
+// 方法3：Object.defineProperty
+Object.defineProperty(o, s2, { 
+  value: "bar val"
+});
+
+// 方法4：Object.defineProperties
+Object.defineProperties(o, {
+  [s3]: { 
+    value: "baz val",
+    enumerable: true
+  },
+  [s4]: { 
+    value: "qux val",
+    enumerable: true
+  }
+});
+
+// 验证属性存在
+console.log(o[s1]);  // "foo val"
+console.log(o[s2]);  // "bar val"
+console.log(o[s3]);  // "baz val"
+console.log(o[s4]);  // "qux val"
+
+// Symbol属性不会出现在常规遍历中
+console.log(Object.keys(o));  // []
+console.log(Object.getOwnPropertyNames(o));  // []
+
+// 需要专门的方法获取Symbol属性
+console.log(Object.getOwnPropertySymbols(o));  
+// [Symbol(foo), Symbol(bar), Symbol(baz), Symbol(qux)]
+```
+
+
+
+## 二、运算符及表达式
+
+### 2.1 运算符
 
 #### 自增和自减
 
@@ -522,7 +632,7 @@ isNaN(NaN); // true
 
 
 
-### 5.2 表达式及关键词
+### 2.2 表达式及关键词
 
 #### this
 
@@ -600,130 +710,234 @@ isNaN(NaN); // true
 
 
 
-## 六、变量
+## 三、原子（引用）数据类型与作用域
 
-使用关键字 [`let`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/let) 、[`const`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/const) 和 [`var`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/var)：
+### 3.1原子数据类型与引用数据类型
 
-- **`let`** 语句声明一个`块级作用域`的本地变量，并且可选的将其初始化为一个值。
+#### 原子数据类型内存（上述7种）
 
-```typescript
-let a;
-let name = "Simon";
+- 存储在 栈中 的内存地址值， 该值可操作实际值;
+
+##### 复制值
+
+- 在栈中创建一个新空间;
+- 然后将旧变量在栈中的实际值赋值给新空间;
+- 将新空间栈中的内存地址赋值给新变量;
+- 两者相互隔绝;
+
+![image-20260119151321986](./JS%E5%9F%BA%E7%A1%80.assets/image-20260119151321986.png)
+
+#### 引用类型类型内存（object）
+
+- 存储在 栈中 的内存地址值，该值存储堆中的内存地址，操作对 object 的引用
+
+##### 复制值
+
+- 在栈中创建一个新空间;
+- 然后将旧变量在栈中的实际值赋值给新空间;
+- 将新空间栈中的内存地址赋值给新变量;
+- 但新变量在栈中的对应值是指向对象的堆内存地址;
+- 两者实际还是指向一个对象;
+
+![引用传递](./JS%E5%9F%BA%E7%A1%80.assets/2023-03-10-20-01-39-ef1a479566dd25eadd725640d5bc3b4f.png)
+
+#### 动态属性
+
+```javascript
+let name = "Nicholas";
+name.age = 27;
+console.log(name.age); // undefined
+let person = new Object();
+person.name = "Nicholas";
+console.log(person.name); // "Nicholas"
 ```
 
 
 
-- **`const`** 声明一个不可变的常量。这个常量在定义域内总是可见的。
+#### typeof 与 instanceof 
 
-```typescript
-const Pi = 3.14; // 设置 Pi 的值
-Pi = 1; // 将会抛出一个错误因为你改变了一个常量的值。
+##### typeof
 
+```javascript
+let message = "some string";
+console.log(typeof message); // "string"
+```
+
+| 检测对象       | 返回值      |
+| -------------- | ----------- |
+| undefined      | "undefined" |
+| Boolean        | "boolean"   |
+| String         | "string"    |
+| Number         | "number"    |
+| Object or null | "object"    |
+| Function       | "function"  |
+| Symbol         | "symbol"    |
+
+##### instanceof
+
+检测引用类型的具体数据类型
+
+- 检测 reference value, 总是 true;
+- 检测 primitive value, 总是 false;
+
+```javascript
+console.log(person instanceof Object); // is the variable person an Object?
+console.log(colors instanceof Array); // is the variable colors an Array?
+console.log(pattern instanceof RegExp); // is the variable pattern a RegExp?
 ```
 
 
 
-- **`var`** 尽量不要用
+### 3.2 作用域
+
+#### 3.2.1 词法环境
+
+组成
+
+- Environment Record: `存储标识符与变量, 函数等类型的关联`;
+  - Global Environment Record: 对应于全局上下文
+  - Declarative Environment Record
+    - Function Environment Record: 对应于函数执行上下文;
+    - Module Environment Record: 对应与 ESM 模块的顶级上下文, outer 为 Global Environment Record;
+- outer: 指向的上级 lexicalEnvironment;
+- this: lexicalEnvironment 绑定的 this;
 
 
 
-## 七、逻辑结构
+#### 3.2.2 this确定
 
-### 7.1 if else结构
+- 全局执行上下文;
+  - 严格模式为 undefined;
+  - 非严格模式为 windows/global;
+- 函数执行上下文;
+  - 普通函数: 根据函数被调用时的方式;
+    - 函数被对象调用/new, this 指向该对象 (对象、构造函数或类的实例);
+    - 函数不被对象调用, this 指向 undefined/windows;
+  - 箭头函数;
+    - 箭头函数`创建时候`的`执行上下文`的 `lexicalEnvironment` 无 this binding;
+    - 其沿着 lexicalEnvironment 中 outer 获得最邻近 this, 使用该 this;
 
-- 使用 `if` 、 `else` 、`else-if`定义条件语句
 
-```typescript
-var name = "kittens";
-if (name == "puppies") {
-  name += "!";
-} else if (name == "kittens") {
-  name += "!!";
-} else {
-  name = "!" + name;
+
+```javascript
+// 普通函数
+function test() {
+  console.log(this);
 }
-name == "kittens!!"; // true
+const o = {
+  test: test;
+};
+// 普通函数不被被对象调用, this 指向该对象
+test(); // windows
+// 普通函数被对象 o 调用, this 指向 o
+o.test(); // Object: o
 
-```
-
-- 可使用基于一个`数字或字符串`的 `switch` 语句：
-
-```typescript
-switch (action) {
-  case "draw":
-    drawIt();
-    break;
-  case "eat":
-    eatIt();
-    break;
-  default:
-    doNothing();
-}
-
-```
-
-:bulb: 注意添加break；
-
-
-
-### 7.2 循环结构
-
-- 支持 `while` 循环和 `do-while` 循环。
-
-```typescript
-while (true) {
-  // 一个无限循环！
-}
-
-var input;
-do {
-  input = get_input();
-} while (inputIsNotValid(input));
-
-```
-
-- for循环
-
-```typescript
-for (var i = 0; i < 5; i++) {
-  // 将会执行五次
-}
-
-```
-
-- for of & for in
-
-```typescript
-const array1 = ['a', 'b', 'c'];
-
-for (const element of array1) {
-  console.log(element);
-}
-
-const object = { a: 1, b: 2, c: 3 };
-
-for (const property in object) {
-  console.log(`${property}: ${object[property]}`);
-}
+// 箭头函数
+const o = {
+  test0: () => {
+    console.log(this);
+  };
+  test1: function () {
+    (() => {
+      console.log(this);
+    })();
+  };
+};
+// 箭头函数 test0 最邻近的lexicalEnvironment为全局上下文的 LexicalEnvironment, this 指向 undefined/windows
+o.test0();
+// test1 中的匿名箭头函数最邻近的lexicalEnvironment为 test1 的生成的函数执行上下文的 LexicalEnvironment, this 指向 test1 的 this, 即对象 o
+o.test1();
 ```
 
 
 
-## 八、引用类型
+#### 3.2.3 作用域与作用域链
 
-### 8.1 基本引用类型
+> var/const/let/function 等标识符可以访问的 lexicalEnvironment;
+
+##### 分类
+
+- 全局作用域;
+  - 存储在全局执行上下文的 LexicalEnvironment 或 VariableEnvironment 中;
+  - 可以被执行栈上的任意执行上下文的 LexicalEnvironment 或 VariableEnvironment 中的任意标识符访问;
+- 函数作用域;
+  - 存储在对应的函数执行上下文的 LexicalEnvironment 或 VariableEnvironment 中;
+  - 可以被该函数执行上下文下级的执行上下文的 LexicalEnvironment 或 VariableEnvironment 中的标识符访问;
+- 块级作用域;
+  - 存储在 临时创建的 LexicalEnvironment 中;
+  - 仅能被该 LexicalEnvironment 中的标识符访问;
 
 
 
+##### 作用域链
+
+- 基于执行上下文的 outer 访问执行栈中的变量和函数
+- 当前 > 父级 > > 全局
 
 
-### 8.2 复杂引用类型
+
+## 四、垃圾回收
+
+> - js 自动进行垃圾回收, 释放不再使用的变量
+
+- 新生代和老生代对象（经过多次垃圾回收依旧存在）
+
+### 4.1 回收方法
+
+- 引用计数（Reference Counting）
+  - 这是早期垃圾回收机制的一种方式，通过计数每个对象被引用的次数来跟踪。当引用计数降到0时，对象被认为是垃圾，可以被回收。
+- 标记-清除（Mark-and-Sweep）
+  - 现代JavaScript引擎（如V8，SpiderMonkey）使用标记-清除算法。这个过程分为两个阶段：
+    - **标记阶段**：垃圾回收器从根对象（通常是全局对象）开始，遍历所有可达的对象，将它们标记为活跃的。
+    - **清除阶段**：垃圾回收器再次遍历堆内存，清除那些未被标记的对象。
+- 垃圾回收触发条件
+  - 垃圾回收器会在内存使用达到一定阈值时自动触发，或者在特定操作（如页面隐藏或长时间运行的脚本后）后触发。
+
+### 4.2 性能消耗
+
+由于性能耗费较大，如下方便垃圾回收（对于不需要的）
+
+- 手动赋值null
+  - 和初始化变量为null 冲突。初始化时候没有对象要被回收，一般后期手动赋值null ， 回收不需要对象
+- 避免全局变量，尽量定义函数中
+- 使用let const
+- 减少闭包
 
 
 
-## 九、数组
+## 五、引用类型
 
-### 9.1 创建数组
+### 5.1 基本引用类型
+
+- Date;
+- RegExp;
+- Math;
+- Primitive Wrapper Types（原始包装类型）
+  - Boolean;
+  - Number;
+  - String;
+
+
+
+### 5.2 集合引用类型
+
+- array
+  - Array
+  - 伪数组（具有length， 可转换）
+- typedArray 类型化数组
+- object
+- map
+- weakMap
+- set
+- weakSet
+
+:bulb: 拓展运算符（`...`）：具有 default iterator （Array Map Set）的集合引用类型均可用于 for...of 循环
+
+
+
+#### 5.2.1 Array
+
+##### 创建数组
 
 创建数组的传统方法是：
 
@@ -759,7 +973,7 @@ typeof a[90]; // undefined
 
 
 
-### 9.2 数组循环
+##### 数组循环
 
 可以通过如下方式遍历一个数组：
 
@@ -777,7 +991,7 @@ for (const currentValue of a) {
 }
 ```
 
-遍历数组的另一种方法是使用 [`for...in`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in) 循环，然而这并不是遍历数组元素而是数组的索引。注意，如果哪个家伙直接向 `Array.prototype` 添加了新的属性，使用这样的循环这些属性也同样会被遍历。所以并不推荐使用这种方法遍历数组：
+遍历数组的另一种方法是使用 [`for...in`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in) 循环，然而这并不是遍历数组元素而是数组的索引
 
 ```typescript
 for (var i in a) {
@@ -795,13 +1009,13 @@ ECMAScript 5 增加了另一个遍历数组的方法，[`forEach()`](https://dev
 
 
 
-### 9.3  常用方法
+##### 常用方法
 
 arr.forEach => 执行一次操作
 
 arr.map  => 返回新数组 执行方法返回新数组  array1.map((x) => x * 2)
 
-arr.filter =>  返回部分数组 给定数组的一部分浅拷贝 words.filter((word) => word.length > 6)
+arr.filter =>  返回部分数组 给定数组的一部分浅拷贝 words.filter((word) => word.length > 6)，` 如果数组每项是对象，则修改筛选后的对象某部分属性值，则同样会影响原数组。因为在原数组中每项存储的是对象的地址值，导致赋值时复制的是内存地址的引用,因此修改副本会影响原始值`
 
 arr.every =>  返回布尔 检验数组元素是否都符合某个函数 array1.every(isBelowThreshold)
 
@@ -867,22 +1081,20 @@ arr.reduce()=> 方法对数组中的每个元素按序执行一个提供的 **re
 
 
 
+#### 5.2.2 Object
 
+##### 创建对象
 
-
-
-## 十、对象
-
-### 10.1 创建对象
-
-有两种简单方法可以创建一个空对象：
+这两种方法在语义上是相同的。第二种更方便的方法叫作“对象字面量（object literal）”法，一般优先选择第二种方法。
 
 ```typescript
 var obj = new Object();
 var obj = {};
 ```
 
-这两种方法在语义上是相同的。第二种更方便的方法叫作“对象字面量（object literal）”法，一般优先选择第二种方法。
+
+
+对象的属性可以通过链式（chain）表示方法进行访问
 
 ```typescript
 var obj = {
@@ -893,44 +1105,18 @@ var obj = {
     size: 12,
   },
 };
-
 ```
-
-对象的属性可以通过链式（chain）表示方法进行访问：
 
 ```typescript
 obj.details.color; // orange
 obj["details"]["size"]; // 12
 ```
 
-下面的例子创建了一个对象原型，**`Person`**，和这个原型的实例，**`You`**。(构造函数的方式)
+
+
+复制对象：
 
 ```typescript
-function Person(name, age) {
-  this.name = name;
-  this.age = age;
-}
-
-var You = new Person("You", 24);
-// 我们创建了一个新的 Person，名称是 "You"
-// ("You" 是第一个参数，24 是第二个参数..)
-
-```
-
-完成创建后，对象属性可以通过如下两种方式进行赋值和访问：
-
-```typescript
-// 点表示法 (dot notation)
-obj.name = "Simon";
-var name = obj.name;
-
-// 括号表示法 (bracket notation)
-obj["name"] = "Simon";
-var name = obj["name"];
-var user = prompt("what is your key?");
-obj[user] = prompt("what is its value?");
-
------------------------------------------------------
 // 快速复制一个对象
 //方式一
 const originalObj = { name: 'John', age: 30, city: 'New York' };
@@ -942,7 +1128,7 @@ const copiedObj = Object.assign({}, originalObj);
 
 
 
-### 10.2 常用方法
+##### 常用方法
 
 Object.assign(target, source) => 复制源对象所有可枚举自身属性给target,返回修改后的target
 
@@ -954,13 +1140,25 @@ Object.values(obj) => 返回数组，包含obj所有自身可枚举字符串属�
 
 Object.hasOwn(obj, 'key1') => 返回布尔，检验obj 是否包含指定键对应的值
 
+Object.create(person)  => 返回一个object 对象 ，该对象隐式原型为person的prototype
+
+Object.defineProperties(obj1, prototypeName, {desc...}) => 为对象定义属性，注意defineProperties设置时候对象的writable  enumerable  和 configurable 默认为false； 字面量声明对象默认都为true
+
+```javascript
+const aabb = {
+    c: 1
+}
+Object.defineProperty(aabb, 'd', {
+    value: 1
+})
+aabb.c = 2
+aabb.d = 2
+console.log(aabb.c , aabb.d) // 2 1
+```
 
 
-## 十一、Map、WeakMap（带键的集合）、Set、WeakSet
 
-:bulb: 如果只是为实现键值对， 相同大小内存 Map大约可比Object多存储50%的总数。
-
-### 11.1 map
+#### 5.2.3 map
 
 - 保存键值对，并能记住键的原始插入顺序
 
@@ -975,17 +1173,28 @@ console.log(map1.get('a'));
 // Expected output: 1
 ```
 
-### 11.2 weakmap
+:bulb: 如果只是为实现键值对， 相同大小内存 Map大约可比Object多存储50%的总数。
 
-- 键值对的集合，键必须是对象或非全局注册的符号，值可以是任意的JavaScript类型。一旦一个对象作为键被回收，那么在 `WeakMap` 中相应的值便成为了进行垃圾回收的候选对象，只要它们没有其他的引用存在
 
-### 11.3 set
 
-- set对象是值的合集。set中的元素只会出现一次，即集合中的元素是唯一的。可以按照插入顺序迭代集合中的元素。*插入顺序*对应于add()方法成功将每一个元素插入到集合中（即，调用 `add()` 方法时集合中不存在相同的元素）的顺序。
+#### 5.2.4 weakmap
 
-### 11.4 weakset
+- 键值对的集合，键必须是`对象或非全局注册的symbol`，值可以是任意的JavaScript类型。一旦一个对象作为键被回收，那么在 `WeakMap` 中相应的值便成为了进行垃圾回收的候选对象，只要它们没有其他的引用存在
+- 不能遍历
 
-- 可被垃圾回收的值的集合，包括对象和非全局注册的符号。`WeakSet` 中的值只能出现一次。它在 `WeakSet` 的集合中是唯一的。
+
+
+#### 5.2.5 set
+
+- set对象是值的合集。set中的元素`只会出现一次，即集合中的元素是唯一的`。可以按照插入顺序迭代集合中的元素。*插入顺序*对应于add()方法成功将每一个元素插入到集合中（调用 `add()` 方法时集合中不存在相同的元素）的顺序。
+
+
+
+#### 5.2.6 weakset
+
+- 可被垃圾回收的值的集合，`对象`。`WeakSet` 中的值只能出现一次。它在 `WeakSet` 的集合中是唯一的。
+
+
 
 > - map 和 weakmap的区别
 >   1. **键类型和垃圾回收行为**：
@@ -1007,196 +1216,190 @@ console.log(map1.get('a'));
 
 
 
-## 十二、函数
+### 5.3 常用方法总结
 
-- 包含 0 个或多个已命名的参数。
-- 函数体中的表达式数量没有限制。
-- return` 语句在返回一个值并结束函数。如果没有使用 `return` 语句，或者一个没有值的 `return` 语句，JavaScript 会返回 `undefined`。
+[查看章节](https://liusihu-source.github.io/%E5%89%8D%E7%AB%AF/JS/%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6/%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%BA%93.html)
 
 
 
-### 12.1 函数参数
+### 5.4 自写数组方法
 
-如果调用函数时没有提供足够的参数，缺少的参数会被 `undefined` 替代。
+forEach
 
-
-
-函数实际上是访问函数体中一个 [`arguments`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments) 的内部对象，这个对象如同一个类似于数组的对象一样，包括了所有被传入的参数。
-
-```typescript
-function add() {
-  var sum = 0;
-  for (var i = 0, j = arguments.length; i < j; i++) {
-    sum += arguments[i];
+```javascript
+Array.prototype.myForEach = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    callback(this[i], i, this);
   }
-  return sum;
-}
-
-add(2, 3, 4, 5); // 14
-
-```
-
-这跟直接写成 `2 + 3 + 4 + 5` 也没什么区别。再创建一个求平均数的函数：
-
-```typescript
-function avg() {
-  var sum = 0;
-  for (var i = 0, j = arguments.length; i < j; i++) {
-    sum += arguments[i];
-  }
-  return sum / arguments.length;
-}
-avg(2, 3, 4, 5); // 3.5
-
-```
-
-[展开运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/rest_parameters)来替换 arguments 的使用。
-
-```typescript
-function avg(...args) {
-  var sum = 0;
-  for (let value of args) {
-    sum += value;
-  }
-  return sum / args.length;
-}
-
-avg(2, 3, 4, 5); // 3.5
-```
-
-允许通过任意函数对象的 [`apply()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) 方法来传递给它一个数组作为参数列表。
-
-```typescript
-avg.apply(null, [2, 3, 4, 5]); // 3.5
-```
-
-
-
-### 12.2 创建匿名函数
-
-下面的函数在语义上与 `function avg()` 相同。可以在代码中的任何地方定义这个函数，就像写普通的表达式一样。
-
-```typescript
-var avg = function () {
-  var sum = 0;
-  for (var i = 0, j = arguments.length; i < j; i++) {
-    sum += arguments[i];
-  }
-  return sum / arguments.length;
 };
+
+const arr = [1, 2, 3, 4, 5];
+arr.myForEach((item) => console.log(item));
 ```
 
-基于这个特性，有人发明出一些有趣的技巧。与 C 中的块级作用域类似，下面这个例子隐藏了局部变量--`立即执行函数IIFE`：
+
+
+Map
 
 ```typescript
-var a = 1;
-var b = 2;
-(function () {
-  var b = 3;
-  a += b;
-})();
-
-a; // 4
-b; // 2
-
-```
-
-JavaScript 允许以递归方式调用函数。递归在处理树形结构（比如浏览器 [DOM](https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model)）时非常有用。
-
-```typescript
-function countChars(elm) {
-  if (elm.nodeType == 3) {
-    // 文本节点
-    return elm.nodeValue.length;
+Array.prototype.myMap = function (callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    result.push(callback(this[i], i, this));
   }
-  var count = 0;
-  for (var i = 0, child; (child = elm.childNodes[i]); i++) {
-    count += countChars(child);
-  }
-  return count;
-}
+  return result;
+};
 
+const arr = [1, 2, 3];
+const mappedArr = arr.myMap((x) => x * 2);
+console.log(mappedArr); // [2, 4, 6]
 ```
 
 
 
-## 十三、自定义对象
-
-> 介绍从函数 到 对象的演变过程，涉及this 、prototype、call和apply
-
-- 自定义对象概念：指数据和在这些数据上进行的操作的集合。`JavaScript 是一种基于原型的编程语言，并没有 class 语句，而是把函数用作类`。
+filter
 
 ```typescript
-function makePerson(first, last) {
-  return {
-    first: first,
-    last: last,
-    fullName: function () {
-      return this.first + " " + this.last;
-    },
-    fullNameReversed: function () {
-      return this.last + ", " + this.first;
-    },
+Array.prototype.myFilter = function (callback) {
+  const result = [];
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      result.push(this[i]);
+    }
+  }
+  return result;
+};
+
+const arr = [1, 2, 3, 4, 5];
+const filteredArr = arr.myFilter((x) => x % 2 === 1);
+console.log(filteredArr); // [1, 3, 5]
+```
+
+
+
+some
+
+```typescript
+Array.prototype.mySome = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const arr = [1, 2, 3, 4, 5];
+const isEven = (x) => x % 2 === 0;
+console.log(arr.mySome(isEven)); // true
+```
+
+
+
+every
+
+```typescript
+Array.prototype.myEvery = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    if (!callback(this[i], i, this)) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const arr = [1, 2, 3, 4, 5];
+const isEven = (x) => x % 2 === 0;
+console.log(arr.myEvery(isEven)); // false
+```
+
+
+
+find
+
+```typescript
+Array.prototype.myFind = function (callback) {
+  for (let i = 0; i < this.length; i++) {
+    if (callback(this[i], i, this)) {
+      return this[i];
+    }
+  }
+  return undefined;
+};
+
+const arr = [1, 2, 3, 4, 5];
+const isEven = (x) => x % 2 === 0;
+console.log(arr.myFind(isEven)); // 2
+```
+
+
+
+reduce
+
+```typescript
+Array.prototype.myReduce = function (callback, initialValue) {
+  let accumulator = initialValue === undefined ? undefined : initialValue;
+
+  for (let i = 0; i < this.length; i++) {
+    if (accumulator !== undefined) {
+      accumulator = callback.call(undefined, accumulator, this[i], i, this);
+    } else {
+      accumulator = this[i];
+    }
+  }
+
+  return accumulator;
+};
+
+const arr = [1, 2, 3, 4, 5];
+const sum = (prev, curr) => prev + curr;
+console.log(arr.myReduce(sum)); // 15
+```
+
+
+
+flat
+
+```typescript
+Array.prototype.myFlat = function (depth = 1) {
+  const result = [];
+
+  const flatten = (arr, d) => {
+    arr.forEach((item) => {
+      if (Array.isArray(item) && d > 0) {
+        flatten(item, d - 1);
+      } else {
+        result.push(item);
+      }
+    });
   };
-}
-s = makePerson("Simon", "Willison");
-s.fullName(); // "Simon Willison"
-s.fullNameReversed(); // Willison, Simon
 
+  flatten(this, depth);
+
+  return result;
+};
+
+const arr = [1, [2, [3, [4]], 5]];
+console.log(arr.myFlat()); // [1, 2, [3, [4]], 5]
+console.log(arr.myFlat(1)); // [1, 2, [3, [4]], 5]
+console.log(arr.myFlat(2)); // [1, 2, 3, [4], 5]
+console.log(arr.myFlat(3)); // [1, 2, 3, 4, 5]
 ```
 
 
 
-- 关键字 [`this`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this)。
-  - 函数中使用，`this` 指代当前的对象，即用[点或者方括号](https://developer.mozilla.org/zh-CN/docs/JavaScript/Reference/Operators/Member_Operators)来访问属性或方法
-  - 如果并没有使用“点”运算符调用某个对象，那么 `this` 将指向全局对象（global object）
+## 六、迭代器与生成器
+
+常见迭代器
+
+- String、Array、Maps、Sets
 
 
 
-- 原型 prototype
-  - 原型链，可被`Person` 的所有实例共享的对象
-  - 试图访问 `Person` 某个实例没有定义的属性，会向上访问  `Person.prototype` 
+自写迭代器
 
-```typescript
-function Person(first, last) {
-  this.first = first;
-  this.last = last;
-}
-Person.prototype.fullName = function () {
-  return this.first + " " + this.last;
-};
-Person.prototype.fullNameReversed = function () {
-  return this.last + ", " + this.first;
-};
+- 必须实现next 方法;
 
-```
-
-```typescript
-s = new Person("Simon", "Willison");
-s.firstNameCaps(); // TypeError on line 1: s.firstNameCaps is not a function
-
-Person.prototype.firstNameCaps = function () {
-  return this.first.toUpperCase();
-};
-s.firstNameCaps(); // SIMON
-
-```
-
-
-
-```typescript
-var s = "Simon";
-s.reversed(); // TypeError on line 1: s.reversed is not a function
-
-String.prototype.reversed = function () {
-  var r = "";
-  for (var i = this.length - 1; i >= 0; i--) {
-    r += this[i];
-  }
-  return r;
-};
-s.reversed(); // nomiS
-
-```
-
-:bulb: 原型链的根节点是 `Object.prototype`
+- 返回包括 value 和 done 两属性的对象;
+  - value: 当前值;
+  - done: 是否迭代完成;

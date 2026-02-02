@@ -250,24 +250,24 @@ export default defineConfig({
               text: '基础',
               collapsed: true,
               items: [
-                { text: 'JS基础', link: '/前端/JS/基础/JS基础.md' }
+                { text: '基础', link: '/前端/JS/基础/JS基础.md' }
               ]
             },
             {
               text: '进阶',
               collapsed: true,
               items: [
-                { text: 'async&await', link: '/前端/JS/进阶/async&await.md' },
+                { text: '对象', link: '/前端/JS/进阶/对象.md' },
+                { text: 'Class', link: '/前端/JS/进阶/Class类.md' },
+                { text: '函数', link: '/前端/JS/进阶/函数.md' },
+                { text: '箭头函数', link: '/前端/JS/进阶/箭头函数.md' },
+                { text: '异步', link: '/前端/JS/进阶/异步.md' },
                 { text: 'call&apply&bind', link: '/前端/JS/进阶/call&apply&bind.md' },
                 { text: 'Promise', link: '/前端/JS/进阶/Promise.md' },
-                { text: 'This', link: '/前端/JS/进阶/This.md' },
-                { text: 'class类', link: '/前端/JS/进阶/class类.md' },
                 { text: '对象原型和原型函数', link: '/前端/JS/进阶/JavaScript对象原型和函数原型.md' },
-                { text: '箭头函数', link: '/前端/JS/进阶/箭头函数.md' },
                 { text: '展开运算符', link: '/前端/JS/进阶/展开运算符.md' },
                 { text: '正则表达式', link: '/前端/JS/进阶/正则表达式.md' },
-                { text: 'JS执行顺序', link: '/前端/JS/进阶/JS执行顺序.md' },
-                { text: '工具函数', link: '/前端/JS/进阶/工具函数.md' }
+                { text: 'JS执行顺序', link: '/前端/JS/进阶/JS执行顺序.md' }
               ]
             },
             {
