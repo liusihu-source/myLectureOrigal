@@ -262,6 +262,7 @@ export default defineConfig({
                 { text: '函数', link: '/前端/JS/进阶/函数.md' },
                 { text: '箭头函数', link: '/前端/JS/进阶/箭头函数.md' },
                 { text: '异步', link: '/前端/JS/进阶/异步.md' },
+                { text: 'BOM', link: '/前端/JS/进阶/BOM.md' },
                 { text: 'call&apply&bind', link: '/前端/JS/进阶/call&apply&bind.md' },
                 { text: 'Promise', link: '/前端/JS/进阶/Promise.md' },
                 { text: '对象原型和原型函数', link: '/前端/JS/进阶/JavaScript对象原型和函数原型.md' },
@@ -291,7 +292,7 @@ export default defineConfig({
           text: 'TS',
           collapsed: true,
           items: [
-            { text: 'TS值类型', link: '/前端/typescript/TS值类型.md' }
+            { text: '基础', link: '/前端/typescript/基础.md' }
           ]
         },
         {
@@ -299,8 +300,8 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'WEBGL基础', link: '/前端/WEBGL/WEBGL.md' },
-            { text: 'SVG', link: '/前端/WEBGL/SVG.md' },
-            { text: 'JSPlumb', link: '/前端/WEBGL/JSPlumb.md' }
+            { text: 'SVG', link: '/前端/WEBGL/svg.md' },
+            { text: 'JSPlumb', link: '/前端/WEBGL/JSplumb.md' }
           ]
         },
         {
@@ -663,7 +664,13 @@ export default defineConfig({
               ]
             },
             { text: '分布式', link: '/计算机/分布式/Docker.md' },
-            { text: 'AI', link: '/计算机/AI/prompt.md' }
+            { text: 'AI', 
+              collapsed: true,
+              items: [
+                { text: 'prompt', link: '/计算机/AI/prompt.md' },
+                { text: '常用', link: '/计算机/AI/常用生成.md' }
+              ]
+            }
           ]
         }
       ],

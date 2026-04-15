@@ -153,21 +153,9 @@ console.log(isNaN(x)); // 输出 "true"
 - immutable 不可变
 - length
 
-#### 字面量
+字面量是写法，如'hello'字符串字面量、5 数字面量、true 布尔字面量、{}对象字面量、[]数组字面量
 
-```javascript
-let name = "lsh";
-console.log(`My name is ${name}.`); // My name is lsh;
-```
-
-#### 原始字符串
-
-```javascript
-console.log(`first line\nsecond line`);
-// first line
-// second line
-console.log(String.raw`first line\nsecond line`); // "first line\nsecond line"
-```
+基本类型的字面量是原始值（不可变）、复杂类型的字面量是引用值
 
 ### 1.7 Symbol（原子）
 
