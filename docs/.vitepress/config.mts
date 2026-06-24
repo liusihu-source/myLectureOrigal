@@ -667,8 +667,9 @@ export default defineConfig({
             { text: 'AI', 
               collapsed: true,
               items: [
-                { text: 'prompt', link: '/计算机/AI/prompt.md' },
-                { text: '常用', link: '/计算机/AI/常用生成.md' }
+                { text: '学术', link: '/计算机/AI/学术.md' },
+                { text: '常用', link: '/计算机/AI/常用生成.md' },
+                { text: '智能体', link: '/计算机/AI/智能体.md' }
               ]
             }
           ]

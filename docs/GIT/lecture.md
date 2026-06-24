@@ -43,20 +43,16 @@
 
 
 
-## ssh(*Secure Shell*)
+简约命令：
 
-1. 从远程仓库克隆到本地
-
-   1. git clone xxx.git
-
-      - 这里涉及ssh秘钥，如果之前配置过，会在C/user/.ssh文件夹下有对应的excel表格等，如果想要清除，删除.ssh文件夹即可
-      - 这个一般会看对应仓库的地址，如gitee的生成方式  https://gitee.com/help/articles/4181 
-
-      ![1664350162630](lecture.assets/1664350162630.png)
-
-      ![1664351174089](lecture.assets/1664351174089.png)
-
-      ![1664351423930](lecture.assets/1664351423930.png)
-
-   2.  其他克隆 提交 和 更新操作都类似
+```
+git commit -a -m '111'
+git push
+git checkout xxx
+git pull
+git merge xxx
+git push
+git log --oneline  # 查看单行简化版
+git revert <id>
+```
 
